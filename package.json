@@ -1,0 +1,25 @@
+{
+  "author": "Karl Skomski <karl@skomski.com>",
+  "name": "scrypt",
+  "description": "Node.js binding to scrypt",
+  "version": "0.1.0",
+  "homepage": "https://github.com/skomski/node-scrypt",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/skomski/node-scrypt.git"
+  },
+  "main": "lib/sosemanuk.js",
+  "directories": {
+    "lib": "."
+  },
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "engines": {
+    "node": ">= 0.6.11"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
