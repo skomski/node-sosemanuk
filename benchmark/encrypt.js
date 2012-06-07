@@ -1,12 +1,13 @@
 var Benchmark = require('benchmark');
 var sosemanuk = require('..')
 var fs = require('fs');
+var crypto = require('crypto');
 
 var suite = new Benchmark.Suite;
 
-var testKey = '12345678901234567890';
-var testIv  = '1234567890123456';
-var cipher = sosemanuk.createCipherSync(new Buffer(testKey), new Buffer(testIv));
+var testKey = crypto.randomBytes(32);
+var testIv  = crypto.randomBytes(16);
+var cipher = sosemanuk.createCipherSync(testKey, testIv);
 
 var buffer = fs.readFileSync(__dirname + '/../test/urls.10K');
 
@@ -14,12 +15,11 @@ suite.add('encrypt', function(deferred) {
   cipher.encrypt(buffer, function(err, encrypted) {
     deferred.resolve();
   });
-}, { defer: true, minSamples: 2000, maxTime: 30 });
+}, { defer: true, maxTime: 30 });
 
-suite.add('encryptSync', function(deferred) {
+suite.add('encryptSync', function() {
   var encrypted = cipher.encryptSync(buffer);
-  deferred.resolve();
-},{ defer: true, minSamples: 2000, maxTime: 30 });
+},{ maxTime: 30 });
 
 suite.on('cycle', function(event, bench) {
   console.log(String(bench));

@@ -1,13 +1,14 @@
 var sosemanuk = require('..');
 var assert = require('assert');
 var fs     = require('fs');
+var crypto = require('crypto');
 
 var tests = 0;
-var testKey = '12345678901234567890';
-var testIv  = '1234567890123456';
+var testKey = crypto.randomBytes(32);
+var testIv  = crypto.randomBytes(16);
 var testBuffer = fs.readFileSync(__dirname + '/urls.10K');
 
-sosemanuk.createCipher(new Buffer(testKey), new Buffer(testIv), function(err, cipher) {
+sosemanuk.createCipher(testKey, testIv, function(err, cipher) {
   assert.ifError(err);
 
   var testString = '1234';
@@ -15,7 +16,7 @@ sosemanuk.createCipher(new Buffer(testKey), new Buffer(testIv), function(err, ci
   var encrypted = cipher.encrypt(testBuffer, function(err, encrypted) {
     assert.ifError(err);
 
-    sosemanuk.createCipher(new Buffer(testKey), new Buffer(testIv), function(err, cipher) {
+    sosemanuk.createCipher(testKey, testIv, function(err, cipher) {
       cipher.encrypt(encrypted, function(err, decrypted) {
         assert.ifError(err);
 

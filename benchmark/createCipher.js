@@ -1,18 +1,21 @@
 var Benchmark = require('benchmark');
-var sosemanuk = require('..')
+var sosemanuk = require('..');
+var crypto = require('crypto');
+
+var testKey = crypto.randomBytes(32);
+var testIv  = crypto.randomBytes(16);
 
 var suite = new Benchmark.Suite;
 
 suite.add('init', function(deferred) {
-  sosemanuk.createCipher(new Buffer('1234'), new Buffer('1234'), function(err, cipher) {
+  sosemanuk.createCipher(testKey, testIv, function(err, cipher) {
     deferred.resolve();
   });
-}, { defer: true, minSamples: 2000, maxTime: 30 });
+}, { defer: true, maxTime: 30 });
 
-suite.add('initSync', function(deferred) {
-  var cipher = sosemanuk.createCipherSync(new Buffer('1234'), new Buffer('1234'));
-  deferred.resolve();
-},{ defer: true, minSamples: 2000, maxTime: 30 });
+suite.add('initSync', function() {
+  sosemanuk.createCipherSync(testKey, testIv);
+},{ maxTime: 30 });
 
 suite.on('cycle', function(event, bench) {
   console.log(String(bench));

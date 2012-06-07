@@ -1,16 +1,17 @@
 var sosemanuk = require('..');
 var assert = require('assert');
 var fs     = require('fs');
+var crypto = require('crypto');
 
 var tests = 0;
-var testKey = '12345678901234567890';
-var testIv  = '1234567890123456';
+var testKey = crypto.randomBytes(32);
+var testIv  = crypto.randomBytes(16);
 var testBuffer = fs.readFileSync(__dirname + '/urls.10K');
 
-var cipher = sosemanuk.createCipherSync(new Buffer(testKey), new Buffer(testIv));
+var cipher = sosemanuk.createCipherSync(testKey, testIv);
 var encrypted = cipher.encryptSync(testBuffer);
 
-var cipher = sosemanuk.createCipherSync(new Buffer(testKey), new Buffer(testIv));
+var cipher = sosemanuk.createCipherSync(testKey, testIv);
 var decrypted = cipher.encryptSync(encrypted);
 
 assert.deepEqual(testBuffer, decrypted);
