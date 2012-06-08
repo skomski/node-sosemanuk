@@ -4,4 +4,5 @@ node_js:
   - 0.7
 
 after_script:
-  - "node benchmark/simple.js"
+  - "node benchmark/createCipher.js"
+  - "node benchmark/encrypt.js"
