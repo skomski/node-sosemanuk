@@ -23,6 +23,7 @@ namespace nodesosemanuk {
   using v8::Exception;
   using v8::Undefined;
   using v8::External;
+  using v8::Null;
 
   static void WeakCallback (v8::Persistent<v8::Value> value, void *data) {
     sosemanuk_run_context *run_context = static_cast<sosemanuk_run_context*>(data);
@@ -31,6 +32,16 @@ namespace nodesosemanuk {
 
   v8::Handle<v8::Value> EncryptSync(const v8::Arguments& args) {
     v8::HandleScope scope;
+
+    if (args.Length() < 1) {
+      ThrowException(Exception::Error(String::New("args.length != 1")));
+      return scope.Close(Undefined());
+    }
+
+    if (!node::Buffer::HasInstance(args[0])) {
+      ThrowException(Exception::Error(String::New("args[0] != type(Buffer)")));
+      return scope.Close(Undefined());
+    }
 
     sosemanuk_run_context *run_context = static_cast<sosemanuk_run_context*>(
         args.This()->GetPointerFromInternalField(0));
@@ -93,6 +104,29 @@ namespace nodesosemanuk {
   Handle<Value> Encrypt(const v8::Arguments& args) {
     HandleScope scope;
 
+    Persistent<Function> callback = Persistent<Function>::New(
+      Local<Function>::Cast(args[1]));
+
+    if (args.Length() < 2) {
+      Handle<Value> argv[2] = {
+        Exception::Error(String::New("args.length != 2")), Null()
+      };
+      TryCatch try_catch;
+      callback->Call(Context::GetCurrent()->Global(), 2, argv);
+      if (try_catch.HasCaught()) node::FatalException(try_catch);
+      return scope.Close(Undefined());
+    }
+
+    if (!node::Buffer::HasInstance(args[0])) {
+      Handle<Value> argv[2] = {
+        Exception::Error(String::New("args[0] != type(Buffer)")), Null()
+      };
+      TryCatch try_catch;
+      callback->Call(v8::Context::GetCurrent()->Global(), 2, argv);
+      if (try_catch.HasCaught()) node::FatalException(try_catch);
+      return scope.Close(Undefined());
+    }
+
     EncryptRequest *req = new EncryptRequest;
     sosemanuk_run_context *run_context = static_cast<sosemanuk_run_context*>(
         args.This()->GetPointerFromInternalField(0));
@@ -107,8 +141,7 @@ namespace nodesosemanuk {
     req->output_buffer_handle = output_buffer->handle_;
     req->output_data = node::Buffer::Data(output_buffer);
 
-    req->callback = Persistent<Function>::New(
-      Local<Function>::Cast(args[1]));
+    req->callback = callback;
 
     uv_work_t *job = new uv_work_t;
     job->data = req;
