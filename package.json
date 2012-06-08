@@ -1,12 +1,12 @@
 {
   "author": "Karl Skomski <karl@skomski.com>",
-  "name": "scrypt",
-  "description": "Node.js binding to scrypt",
-  "version": "0.1.0",
-  "homepage": "https://github.com/skomski/node-scrypt",
+  "name": "sosemanuk",
+  "description": "Node.js binding for sosemanuk",
+  "version": "0.2.0",
+  "homepage": "https://github.com/skomski/node-sosemanuk",
   "repository": {
     "type": "git",
-    "url": "git://github.com/skomski/node-scrypt.git"
+    "url": "git://github.com/skomski/node-sosemanuk.git"
   },
   "main": "lib/sosemanuk.js",
   "directories": {
