@@ -5,7 +5,7 @@ node.js binding for sosemanuk (<http://www.ecrypt.eu.org/stream/e2-sosemanuk.htm
 ## Install
 
 ```
-npm install https://github.com/Skomski/node-sosemanuk
+npm install https://github.com/Skomski/node-sosemanuk/tarball/v0.0.3
 ```
 
 ## Usage
