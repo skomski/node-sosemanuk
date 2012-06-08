@@ -14,6 +14,7 @@ npm install https://github.com/Skomski/node-sosemanuk
 
 var sosemanuk = require('sosemanuk');
 var crypto = require('crypto');
+var assert = require('assert');
 
 var key = crypto.randomBytes(32);
 var iv  = crypto.randomBytes(16);

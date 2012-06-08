@@ -11,12 +11,12 @@ var testBuffer = fs.readFileSync(__dirname + '/urls.10K');
 sosemanuk.createCipher(testKey, testIv, function(err, cipher) {
   assert.ifError(err);
 
-  var testString = '1234';
-
-  var encrypted = cipher.encrypt(testBuffer, function(err, encrypted) {
+  cipher.encrypt(testBuffer, function(err, encrypted) {
     assert.ifError(err);
 
     sosemanuk.createCipher(testKey, testIv, function(err, cipher) {
+      assert.ifError(err);
+
       cipher.encrypt(encrypted, function(err, decrypted) {
         assert.ifError(err);
 
