@@ -24,7 +24,7 @@ var cipher = sosemanuk.createCipherSync(key, iv);
 var encrypted = cipher.encryptSync(buffer);
 
 var decipher = sosemanuk.createCipherSync(key, iv);
-var decrypted = decipher.encryptSync(buffer);
+var decrypted = decipher.encryptSync(encrypted);
 
 assert.deepEqual(buffer, decrypted);
 ```
