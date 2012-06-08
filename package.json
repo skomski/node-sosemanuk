@@ -13,10 +13,10 @@
     "lib": "."
   },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test-sync.js && node test/test-async.js"
   },
   "engines": {
-    "node": ">= 0.6.11"
+    "node": ">= 0.6.18"
   },
   "dependencies": {
   },
