@@ -1,6 +1,6 @@
 # node-sosemanuk [![Build Status](https://secure.travis-ci.org/Skomski/node-sosemanuk.png?branch=unstable)](http://travis-ci.org/Skomski/node-sosemanuk)
 
-node.js binding for sosemanuk <http://www.ecrypt.eu.org/stream/e2-sosemanuk.html>
+node.js binding for sosemanuk (<http://www.ecrypt.eu.org/stream/e2-sosemanuk.html>)
 
 ## Install
 
